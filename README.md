@@ -1,6 +1,6 @@
-# Gladiator – Full Stack Web Application
+# Vehicle service management – Full Stack Web Application
 
-Gladiator is a full-stack web application developed using **Spring Boot** for the backend and **Angular** for the frontend.  
+ Vehicle service management is a full-stack web application developed using **Spring Boot** for the backend and **Angular** for the frontend.  
 It implements **JWT-based authentication**, **role-based authorization**, and uses **MySQL** for persistent data storage.
 
 ---
