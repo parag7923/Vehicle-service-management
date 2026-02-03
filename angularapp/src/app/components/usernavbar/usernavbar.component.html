@@ -1,0 +1,56 @@
+<div class="nav-container"  (mouseleave)="closeAllDropdowns()">
+  <div class="logo">VehicleService</div>
+    <ul *ngIf="isUserLoggedIn()">
+      <li class="user-box">
+        {{ service.getAuthenticatedUser() }} ({{ service.getRole() }})
+      </li>
+      <li>
+        <a routerLink="/" (mouseenter)="cancelLogout()">Home</a>
+      </li>
+ 
+      <ng-container *ngIf="isCustomer()">
+       
+        <li class="dropdown" (mouseleave)="closeAllDropdowns()">
+          <a (mouseenter)="cancelLogout(); toggleAppointmentsDropdown()" role="button" aria-haspopup="true" aria-expanded="{{ showAppointmentsDropdown }}" class="app" (keydown)="handleKeyPress($event)">
+ 
+            Appointments
+          </a>
+          <ul *ngIf="showAppointmentsDropdown">
+            <li><a routerLink="/useraddappointment" (click)="cancelLogout()">Book</a></li>
+            <li><a routerLink="/userviewappointment"   (click)="cancelLogout()">View</a></li>
+          </ul>
+        </li>
+ 
+       
+        <li class="dropdown"  (mouseleave)="closeAllDropdowns()">
+          <a (mouseenter)="cancelLogout(); toggleFeedbackDropdown()" role="button" aria-haspopup="true" aria-expanded="{{ showFeedbackDropdown }}" class="feedback" (keydown)="handleKeyPress($event)">
+            Feedback
+          </a>
+          <ul *ngIf="showFeedbackDropdown">
+            <li><a routerLink="/useraddfeedback" (click)="cancelLogout()">Add</a></li>
+            <li><a routerLink="/userviewfeedback"  (click)="cancelLogout()">View</a></li>
+          </ul>
+        </li>
+ 
+       
+        <li>
+          <a routerLink="/profile" (mouseenter)="cancelLogout()" class="profile-icon"></a>
+        </li>
+ 
+ 
+      </ng-container>
+ 
+      <li>
+        <button class="logout-btn" (click)="confirmLogout()">Logout</button>
+      </li>
+    </ul>
+ 
+    <div *ngIf="showLogoutPopup" class="logout-popup" (mouseleave)="cancelLogout()">
+      <p>Are you sure you want to logout?</p>
+      <button class="yes-button" (click)="logout()">Yes</button>
+      <button class="no-button"  (click)="cancelLogout()">No</button>
+    </div>
+</div>
+ 
+ 
+ 

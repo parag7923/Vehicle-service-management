@@ -1,0 +1,31 @@
+  <div class="profile-container">
+    <h2>{{getRole()}} Profile <span class="edit-icon" (click)="enableEdit()" (keydown)="handleKeyPress($event)">&#9998;</span></h2>
+
+  
+  <div *ngIf="!isEditing">
+    <img [src]="profileImage" alt="Profile" class="profile-img" />
+    <p><strong>Username:</strong> {{ username }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+    <p><strong>Mobile Number:</strong> {{ mobileNumber }}</p>
+  </div>
+
+  <!-- Edit Mode -->
+  <div *ngIf="isEditing">
+    <label for="name">Username:</label>
+    <input id="name" type="text" [(ngModel)]="username" disabled />
+
+    <label for="email">Email:</label>
+    <input id="email" type="text" [(ngModel)]="email" />
+    <small *ngIf="emailError" class="error">Enter a valid email</small>
+
+    <label for="mobile">Mobile Number:</label>
+    <input id="mobile" type="text" [(ngModel)]="mobileNumber" />
+    <small *ngIf="mobileError" class="error">Enter a valid mobile number</small>
+
+    <button (click)="updateProfile()">Update Profile</button>
+    <button (click)="cancelEdit()">Cancel</button>
+  </div>
+
+  <!-- Success Message -->
+  <p *ngIf="showSuccess" class="success-message">✅ Profile updated successfully!</p>
+</div>

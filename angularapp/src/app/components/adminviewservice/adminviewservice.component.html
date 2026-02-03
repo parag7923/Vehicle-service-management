@@ -1,0 +1,166 @@
+<div class="view-container">
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Enter Service Name"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="searchServices()"
+    />
+    <!-- <button class="btn btn-search" (click)="searchServices()">Search</button>
+    <button
+      *ngIf="showSearchClear"
+      class="btn btn-show-all"
+      (click)="showAll()"
+    >
+      Show All
+    </button> -->
+  </div>
+
+  <!-- Service Table -->
+  <div class="table-wrapper">
+    <table class="service-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Service Name</th>
+          <th>Service Price</th>
+          <th>Type of Vehicle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of paginatedServices; let i = index">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td>{{ service.serviceName }}</td>
+          <td>₹{{ service.servicePrice }}</td>
+          <td>{{ service.typeOfVehicle }}</td>
+          <td>
+            <button class="btn btn-edit" (click)="openEditModal(service)">Edit</button>
+            <button class="btn btn-delete" (click)="openDeleteConfirm(service)">Delete</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="isLoading">
+          <td colspan="5" class="text-center">Loading services...</td>
+        </tr>
+
+        <tr *ngIf="!isLoading && displayedServices.length === 0">
+          <td colspan="5" class="no-data">Oops! No services found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-controls" *ngIf="!isLoading && totalPages > 1">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+      « Prev
+    </button>
+
+    <button
+      *ngFor="let page of totalPagesArray"
+      (click)="changePage(page)"
+      [class.active]="page === currentPage"
+    >
+      {{ page }}
+    </button>
+
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      Next »
+    </button>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="popup-overlay" *ngIf="showEditModal">
+  <div class="popup-content edit-form">
+    <h3>Edit Service</h3>
+    <form *ngIf="serviceToEdit" #editForm="ngForm" (ngSubmit)="editForm.form.valid && onUpdateService()">
+
+      <div class="form-group">
+        <label for="editServiceName">Service Name</label>
+        <input
+          type="text"
+          id="editServiceName"
+          name="editServiceName"
+          class="form-control"
+          [(ngModel)]="serviceToEdit.serviceName"
+          #serviceNameVar="ngModel"
+          pattern="^[A-Za-z ]+[0-9]*$"
+          required
+        />
+        <div *ngIf="serviceNameVar.invalid && (serviceNameVar.dirty || serviceNameVar.touched)" class="error-message">
+          <small *ngIf="serviceNameVar.errors?.required">Service Name is required.</small>
+          <small *ngIf="serviceNameVar.errors?.pattern">Only letters followed by optional numbers are allowed.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editServicePrice">Service Price</label>
+        <input
+          type="number"
+          id="editServicePrice"
+          name="editServicePrice"
+          class="form-control"
+          [(ngModel)]="serviceToEdit.servicePrice"
+          #servicePriceVar="ngModel"
+          pattern="^[0-9]+$"
+          required
+          min="0"
+        />
+        <div *ngIf="servicePriceVar.invalid && (servicePriceVar.dirty || servicePriceVar.touched)" class="error-message">
+          <small *ngIf="servicePriceVar.errors?.required">Price is required.</small>
+          <small *ngIf="servicePriceVar.errors?.min">Price must be 0 or more.</small>
+          <small *ngIf="servicePriceVar.errors?.pattern">Only positive numbers are allowed.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editVehicleType">Type of Vehicle</label>
+        <select
+          id="editVehicleType"
+          name="editVehicleType"
+          class="form-control"
+          [(ngModel)]="serviceToEdit.typeOfVehicle"
+          #vehicleTypeVar="ngModel"
+          required
+        >
+          <option value="" disabled>Select vehicle type</option>
+          <option *ngFor="let type of vehicleTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="vehicleTypeVar.invalid && (vehicleTypeVar.dirty || vehicleTypeVar.touched)" class="error-message">
+          <small *ngIf="vehicleTypeVar.errors?.required">Vehicle type is required.</small>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-update" [disabled]="editForm.form.invalid">Update Service</button>
+        <button type="button" class="btn btn-cancel" (click)="closeEditModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirmation -->
+<div class="popup-overlay" *ngIf="showDeleteConfirm">
+  <div class="popup-content confirm-dialog">
+    <h4>Confirm Deletion</h4>
+    <p>Are you sure you want to delete this service?</p>
+    <div class="dialog-actions">
+      <button class="btn btn-delete" (click)="confirmDelete()">Yes, Delete</button>
+      <button class="btn btn-cancel" (click)="closeDeleteConfirm()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Success Popup -->
+<div class="popup-overlay" *ngIf="showSuccessPopup">
+  <div class="popup-content success-dialog">
+    <h3>Success!</h3>
+    <p>{{ successMessage }}</p>
+    <button class="btn-ok" (click)="closeSuccessPopup()">Close</button>
+  </div>
+</div>

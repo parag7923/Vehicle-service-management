@@ -1,0 +1,10 @@
+<ng-container *ngIf="(authService.isLoggedIn$ | async) as isLoggedIn">
+  <ng-container *ngIf="(authService.userRole$ | async) as role">
+    <app-adminnavbar *ngIf="role === 'ADMIN'"></app-adminnavbar>
+    <app-usernavbar *ngIf="role === 'USER'"></app-usernavbar>
+  </ng-container>
+</ng-container>
+
+<app-navbar *ngIf="!(authService.isLoggedIn$ | async)"></app-navbar>
+
+<router-outlet></router-outlet>

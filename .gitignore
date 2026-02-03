@@ -1,0 +1,67 @@
+# =========================
+# OS / Editor files
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+
+# =========================
+# IDE files
+# =========================
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# =========================
+# Node / Angular
+# =========================
+angularapp/node_modules/
+angularapp/dist/
+angularapp/.angular/
+angularapp/.cache/
+angularapp/npm-debug.log*
+angularapp/yarn-error.log*
+
+# =========================
+# Spring Boot / Java
+# =========================
+springapp/target/
+springapp/.classpath
+springapp/.project
+springapp/.settings/
+
+# =========================
+# Application secrets
+# =========================
+springapp/src/main/resources/application.properties
+springapp/src/main/resources/application-prod.properties
+springapp/src/main/resources/application-dev.properties
+
+# =========================
+# Environment files
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Test / Coverage
+# =========================
+coverage/
+*.exec
+
+# =========================
+# Build outputs
+# =========================
+*.jar
+*.war
+*.ear
+
+# =========================
+# Temp files
+# =========================
+tmp/
+temp/

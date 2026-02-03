@@ -1,0 +1,50 @@
+<div class="feedback-form-container">
+  <h2>Submit Your Feedback</h2>
+
+  <form (ngSubmit)="submitFeedback()" #feedbackForm="ngForm" class="feedback-form">
+    <div class="form-group">
+      <label for="message">Message:</label>
+      <textarea
+        id="message"
+        name="message"
+        [(ngModel)]="newFeedback.message"
+        required
+        placeholder="Write your feedback here..."
+        pattern="^[a-zA-Z ]+$"
+        #message="ngModel"
+      ></textarea>
+      <div *ngIf="message.invalid && message.touched" class="error">
+        <span *ngIf="message.errors?.required">Message is required.</span>
+        <span *ngIf="message.errors?.pattern">Only letters and spaces are allowed.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Rating:</label>
+      <div class="star-rating">
+        <span
+          *ngFor="let star of stars"
+          (click)="setRating(star)"
+          [class.filled]="isStarFilled(star)"
+          class="star"
+        >&#9733;</span>
+      </div>
+      <div *ngIf="!newFeedback.rating && feedbackForm.submitted" class="error">
+        Rating is required.
+      </div>
+    </div>
+ 
+    <button type="submit" class="btn-submit" [disabled]="feedbackForm.invalid || !newFeedback.rating">
+      Submit Feedback
+    </button>
+  </form>
+</div>
+ 
+<!-- Success Popup -->
+<div *ngIf="showSuccessPopup" class="popup-overlay">
+  <div class="popup-content">
+    <h2>Success</h2>
+    <p>Your feedback has been submitted successfully!</p>
+    <button (click)="closePopup()">OK</button>
+  </div>
+</div>

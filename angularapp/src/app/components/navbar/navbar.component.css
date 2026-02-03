@@ -1,0 +1,34 @@
+.nav-container {
+  background-color: #1f1f1f;
+  padding: 5px 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.nav-container h1 a {
+  color: white;
+  text-decoration: none;
+  font-size: 29px;
+}
+
+.nav-container ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-container ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.nav-container ul li a:hover {
+  color: #ccc;
+}

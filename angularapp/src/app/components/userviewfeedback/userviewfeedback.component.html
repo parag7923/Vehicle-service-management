@@ -1,0 +1,24 @@
+<div class="user-feedback-container">
+    <h2>Your Feedbacks</h2>
+  
+    <table class="feedback-table" *ngIf="userFeedbacks.length > 0; else noFeedback">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Message</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let feedback of userFeedbacks">
+          <td>{{ feedback.feedbackId }}</td>
+          <td>{{ feedback.message }}</td>
+          <td>{{ feedback.rating }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #noFeedback>
+      <p class="no-data">You have not submitted any feedback yet.</p>
+    </ng-template>
+  </div>

@@ -1,0 +1,206 @@
+/* --- All your previous styles from registration.component.css --- */
+/* (They are all correct, just add the new styles below) */
+ 
+.fullscreen-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background: url('https://images.hdqwalls.com/wallpapers/exotic-cars-4k-vo.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.nav-container {
+  background-color: #0c0101dc;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+.nav-container h1 a { color: #fff; text-decoration: none; font-size: 24px; font-weight: bold; }
+.nav-container ul { list-style: none; display: flex; gap: 20px; }
+.nav-container ul li a { color: #fff; text-decoration: none; font-size: 16px; }
+.main-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.form-section {
+  width: 400px;
+  padding: 30px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px #a4a1a1;
+  color: #f9f7f7;
+}
+
+.form-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+}
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 14px;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+ 
+/* --- START OF CHANGES --- */
+ 
+/* Remove margin-bottom from inputs inside a wrapper */
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+  padding-right: 40px; /* Space for the icon */
+  margin-bottom: 0; 
+}
+/* All other inputs keep their margin */
+input {
+  margin-bottom: 15px;
+}
+ 
+input:focus {
+  border-color: #4da8ff;
+  box-shadow: 0 0 8px rgba(77, 168, 255, 0.5);
+}
+::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; 
+}
+ 
+/* --- NEW: Password Toggle Styles --- */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px; /* Replaces input's margin-bottom */
+}
+ 
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+ 
+.password-toggle-icon svg {
+  width: 20px;
+  height: 20px;
+}
+ 
+.password-toggle-icon:hover {
+  color: #fff;
+}
+/* --- END NEW --- */
+ 
+ 
+.role-selection-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+.role-option {
+  flex: 1;
+  position: relative;
+  margin: 0;
+}
+.role-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.role-option span {
+  display: block;
+  background-color: #a4a1a1;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.role-option input[type="radio"]:checked + span {
+  background-color: #399bf7;
+  border-color: #2f95f4;
+  font-weight: 600;
+}
+.role-option input[type="radio"]:not(:checked) + span:hover {
+  background-color: rgba(250, 246, 246, 0.1);
+}
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #399bf7;
+  color: #141212;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+button:not(:disabled):hover {
+  background-color: #48f487;
+  box-shadow: 0 4px 15px rgba(37, 246, 65, 0.4);
+}
+button[disabled] {
+  background-color: rgba(238, 233, 233, 0.3);
+  color: rgba(9, 8, 8, 0.7);
+  cursor: not-allowed;
+}
+.error-message {
+  color: rgb(246, 168, 168);
+  font-size: 13px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+.alert {
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.alert-success {
+  color: #146e44;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+.alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+ 

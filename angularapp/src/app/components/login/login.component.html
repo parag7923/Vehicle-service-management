@@ -1,0 +1,60 @@
+<div class="fullscreen-wrapper">
+  <div class="main-container">
+    <div class="form-section">
+      <h2>Login</h2>
+      <form #loginForm="ngForm" (ngSubmit)="login()">
+        <!-- Username -->
+        <label for="username">Username*</label>
+        <input type="text"
+               id="username"
+               name="username"
+               [(ngModel)]="username"
+               #usernameInput="ngModel"
+               placeholder="Enter your username"
+               required>
+        <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error-message">
+          <div *ngIf="usernameInput.errors?.required">Username is required</div>
+        </div>
+ 
+        <!-- Password -->
+        <label for="password">Password*</label>
+        <div class="password-wrapper">
+          <input [type]="passwordFieldType"
+                 id="password"
+                 name="password"
+                 [(ngModel)]="password"
+                 #passwordInput="ngModel"
+                 placeholder="Enter your password"
+                 required>
+          
+          <!-- Password Toggle Button -->
+          <span class="password-toggle-icon" (click)="togglePasswordVisibility()" (keydown)="handleKeyPress($event)">
+            <svg *ngIf="passwordFieldType === 'password'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 10.224 6.365 7.5 12 7.5c5.635 0 8.573 2.724 9.964 4.183.37.362.37.951 0 1.313C20.573 14.776 17.635 17.5 12 17.5c-5.635 0-8.573-2.724-9.964-4.183Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+            <svg *ngIf="passwordFieldType === 'text'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L12 12" />
+            </svg>
+          </span>
+        </div>
+        <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
+          Password is required
+        </div>
+ 
+        <!-- Alert Box for Login Error -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+ 
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="loginForm.invalid || isSubmitting">Login</button>
+        
+        <!-- Register Link -->
+        <div class="register-link">
+          Don't have an account? <a routerLink="/registration">Register here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

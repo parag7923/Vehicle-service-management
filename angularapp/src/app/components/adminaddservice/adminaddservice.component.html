@@ -1,0 +1,77 @@
+<div class="form-container">
+  <h2>{{ isEditMode ? 'Edit Service' : 'Add Service' }}</h2>
+
+  <form #serviceForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+   
+    <div class="form-group">
+      <label for="serviceName">Service Name</label>
+      <input
+        type="text"
+        id="serviceName"
+        name="serviceName"
+        class="form-control"
+        placeholder="Enter service name"
+        [(ngModel)]="service.serviceName"
+        #serviceNameVar="ngModel"
+        pattern="^[A-Za-z ]+$"
+        required
+      />
+      <div *ngIf="serviceNameVar.invalid && (serviceNameVar.dirty || serviceNameVar.touched)" class="error-message">
+        <small *ngIf="serviceNameVar.errors?.required">Service Name is required.</small>
+        <small *ngIf="serviceNameVar.errors?.pattern">Only letters and spaces are allowed.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="servicePrice">Service Price</label>
+      <input
+        type="number"
+        id="servicePrice"
+        name="servicePrice"
+        class="form-control"
+        placeholder="0"
+        [(ngModel)]="service.servicePrice"
+        #servicePriceVar="ngModel"
+        pattern="^[0-9]+$"
+        required
+        min="0"
+      />
+      <div *ngIf="servicePriceVar.invalid && (servicePriceVar.dirty || servicePriceVar.touched)" class="error-message">
+        <small *ngIf="servicePriceVar.errors?.required">Service Price is required.</small>
+        <small *ngIf="servicePriceVar.errors?.pattern">Price must be positive.</small>
+      </div>
+    </div>
+
+    
+    <div class="form-group">
+      <label for="vehicleType">Type of Vehicle</label>
+      <select
+        id="vehicleType"
+        name="vehicleType"
+        class="form-control"
+        [(ngModel)]="service.typeOfVehicle"
+        #vehicleTypeVar="ngModel"
+        required
+      >
+        <option value="" disabled>Select vehicle type</option>
+        <option *ngFor="let type of vehicleTypes" [value]="type">{{ type }}</option>
+      </select>
+      <div *ngIf="vehicleTypeVar.invalid && (vehicleTypeVar.dirty || vehicleTypeVar.touched)" class="error-message">
+        <small *ngIf="vehicleTypeVar.errors?.required">Please select a vehicle type.</small>
+      </div>
+    </div>
+
+   
+    <button type="submit" class="btn-submit" [disabled]="serviceForm.invalid">
+      {{ isEditMode ? 'Update Service' : 'Add Service' }}
+    </button>
+  </form>
+</div>
+
+<div class="popup-overlay" *ngIf="showSuccessPopup">
+  <div class="popup">
+    <h3>Service Added Successfully</h3>
+    <p>Your service has been added successfully.</p>
+    <button (click)="closePopup()" class="btn-ok">OK</button>
+  </div>
+</div>

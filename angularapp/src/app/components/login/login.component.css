@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap");
+ 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+ 
+.fullscreen-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background: url('https://images.hdqwalls.com/wallpapers/exotic-cars-4k-vo.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+ 
+.main-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+ 
+.form-section {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+ 
+.form-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+}
+ 
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 14px;
+}
+ 
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+ 
+/* Make password input padding right for icon */
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+  padding-right: 40px; /* Space for the icon */
+  margin-bottom: 0; /* Wrapper will handle margin */
+}
+ 
+input:focus {
+  border-color: #2e95f6;
+  box-shadow: 0 0 8px rgba(77, 168, 255, 0.5);
+}
+ 
+::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; 
+}
+ 
+/* --- NEW: Password Toggle Styles --- */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px; /* Replaces input's margin-bottom */
+}
+ 
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+ 
+.password-toggle-icon svg {
+  width: 20px;
+  height: 20px;
+}
+ 
+.password-toggle-icon:hover {
+  color: #fff;
+}
+/* --- END NEW --- */
+ 
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #3398f7;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 10px; /* Added margin-top */
+}
+ 
+button:not(:disabled):hover {
+  background-color: #28fa1c;
+  box-shadow: 0 4px 15px rgba(139, 255, 77, 0.4);
+}
+ 
+button[disabled] {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: not-allowed;
+}
+ 
+.error-message {
+  color: #fcadad;
+  font-size: 13px;
+  margin-top: 5px; /* Adjusted margin */
+  margin-bottom: 10px;
+}
+ 
+/* Register link styles */
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+ 
+.register-link a {
+  color: #349bfb;
+  font-weight: 600;
+  text-decoration: none;
+}
+ 
+.register-link a:hover {
+  text-decoration: underline;
+}
+ 
+/* Alert box styles */
+.alert {
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+ 
+.alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}

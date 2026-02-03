@@ -1,0 +1,173 @@
+<div *ngIf="showSuccessPopup" class="popup-overlay">
+  <div class="popup-content success-dialog">
+    <h3>Success!</h3>
+    <p>{{ successMessage }}</p>
+    <button class="btn-ok" (click)="closePopup()">Close</button>
+  </div>
+</div>
+ 
+<div class="container my-4">
+  <h2 class="section-title">Available Services</h2>
+ 
+  <div *ngIf="globalErrorMessage && !showSuccessPopup" class="alert alert-danger">
+    {{ globalErrorMessage }}
+  </div>
+ 
+  <div *ngIf="allServices.length > 0; else noServices" class="table-wrapper">
+    <table class="table align-middle">
+      <thead class="table-dark-header">
+        <tr>
+          <th>S. NO</th>
+          <th>Service Name</th>
+          <th>Price</th>
+          <th>Type of Vehicle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of paginatedServices; let i = index">
+          <td>{{ ((currentPage - 1) * itemsPerPage) + i + 1 }}</td>
+          <td>{{ service.serviceName }}</td>
+          <td>₹{{ service.servicePrice }}</td>
+          <td>{{ service.typeOfVehicle || 'N/A' }}</td>
+          <td>
+            <button
+              type="button"
+              (click)="openBookingModal(service)"
+              [disabled]="!currentUser"
+              class="btn book-btn"
+            >
+              Book Now
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+ 
+  <div class="pagination-controls mt-3" *ngIf="getTotalPages() > 1">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">« Prev</button>
+    <button
+      *ngFor="let page of getPageNumbers()"
+      (click)="goToPage(page)"
+      [class.active]="page === currentPage"
+    >
+      {{ page }}
+    </button>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === getTotalPages()">Next »</button>
+  </div>
+ 
+  <ng-template #noServices>
+    <div *ngIf="!globalErrorMessage" class="no-data-message text-center mt-4">
+      <h3>Oops! No Services found.</h3>
+    </div>
+  </ng-template>
+</div>
+ 
+ 
+<div class="modal-backdrop" *ngIf="showBookingModal"></div>
+<div class="modal" *ngIf="showBookingModal" tabindex="-1" style="display: block;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <form #bookingForm="ngForm" (ngSubmit)="onModalSubmit(bookingForm)" novalidate>
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title">Book Appointment</h5>
+            <p class="modal-subtitle">
+              For: <strong>{{ selectedServiceForBooking?.serviceName }}</strong> (₹{{ selectedServiceForBooking?.servicePrice }})
+            </p>
+          </div>
+          <button type="button" class="close" (click)="closeBookingModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+ 
+        <div class="modal-body">
+          
+          <div class="form-group">
+            <label for="modalAppointmentDate">Select Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="modalAppointmentDate"
+              name="modalAppointmentDate"
+              [(ngModel)]="modalAppointmentDate"
+              [min]="today"
+              (change)="onModalDateChange()"
+              required
+              #dateVar="ngModel"
+            />
+          </div>
+ 
+          <div class="form-group" *ngIf="modalAppointmentDate && !modalErrorMessage">
+            <label>Available Slots</label>
+            
+            <div *ngIf="modalIsLoadingSlots" class="text-center">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <span class="ml-2">Loading slots...</span>
+            </div>
+ 
+            <div class="slot-container" *ngIf="!modalIsLoadingSlots && modalAvailableSlots.length > 0">
+              <button
+                type="button"
+                *ngFor="let slot of modalAvailableSlots"
+                class="btn slot-btn"
+                [class.btn-primary]="slot === modalTimeSlot"
+                [class.btn-outline-primary]="slot !== modalTimeSlot"
+                (click)="selectModalSlot(slot)"
+              >
+                {{ slot }}
+              </button>
+            </div>
+            <input type="hidden" name="timeSlot" [(ngModel)]="modalTimeSlot" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="modalLocation">Location</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter pickup location"
+              id="modalLocation"
+              name="modalLocation"
+              [(ngModel)]="modalLocation"
+              required
+              minlength="3"
+              maxlength="50"
+              pattern="^[A-Za-z ]+$"
+              #locationVar="ngModel"
+              title="Only letters and spaces are allowed"
+            />
+            <div *ngIf="locationVar.invalid && (locationVar.dirty || locationVar.touched)" class="invalid-feedback d-block">
+              <span *ngIf="locationVar.errors?.required">Location is required.</span>
+              <span *ngIf="locationVar.errors?.minlength">Must be at least 3 characters.</span>
+              <span *ngIf="locationVar.errors?.pattern">Only letters and spaces are allowed.</span>
+            </div>
+          </div>
+          
+          <div *ngIf="modalErrorMessage" class="alert alert-danger modal-error">
+            {{ modalErrorMessage }}
+          </div>
+          <div *ngIf="!modalIsLoadingSlots && modalAvailableSlots.length === 0 && modalAppointmentDate && !modalErrorMessage" class="alert alert-warning modal-error">
+            No available slots for this date.
+          </div>
+        </div>
+ 
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="bookingForm.invalid || !modalTimeSlot || modalIsLoadingSlots"
+          >
+            Confirm Booking
+          </button>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+</div>

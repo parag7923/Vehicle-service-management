@@ -1,0 +1,40 @@
+<div class="nav-container" (mouseleave)="closeDropdown()">
+  <div class="logo">VehicleService</div>
+ 
+  <ul *ngIf="isUserLoggedIn()">
+   
+    <li class="admin-box"> {{service.getAuthenticatedUser()}} / {{ service.getRole() }}</li>
+   
+    <li><a routerLink="/"  (mouseenter)="cancelLogout()">Home</a></li>
+   
+ 
+    <li class="dropdown" (mouseleave)="closeDropdown()">
+      <a (mouseenter)="cancelLogout(); toggleSerDropdown()" role="button" aria-haspopup="true" aria-expanded="{{ showSerDropdown }}" class="service" (keydown)="handleKeyPress($event)"   >
+        Service
+      </a>
+      <ul *ngIf="showSerDropdown">
+        <li><a routerLink="/adminaddservice"  (mouseenter)="cancelLogout()">Add Service</a></li>
+        <li><a routerLink="/adminviewservice"  (mouseenter)="cancelLogout()">View Service</a></li>
+      </ul>
+    </li>
+ 
+    <li><a routerLink="/adminviewappointment" (mouseenter)="cancelLogout()">Appointments</a></li>
+    <li><a routerLink="/adminviewfeedback" (mouseenter)="cancelLogout()">Feedbacks</a></li>
+    <li><a routerLink="/adminviewuserdetails" (mouseenter)="cancelLogout()">Customer</a></li>
+ 
+    <li>
+      <a routerLink="/profile" class="profile-icon" (mouseenter)="cancelLogout()" aria-label="Profile"></a>
+    </li>
+ 
+    <li><button class="logout-btn" (click)="confirmLogout()">Logout</button></li>
+  </ul>
+ 
+ 
+  <div *ngIf="showLogoutPopup" class="logout-popup" (mouseleave)="cancelLogout()">
+    <p>Are you sure you want to logout?</p>
+    <button class="yes-button" (click)="logout()">Yes</button>
+    <button class="no-button"  (click)="cancelLogout()">No</button>
+  </div>
+   
+ 
+</div>
