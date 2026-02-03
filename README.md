@@ -52,6 +52,7 @@ Create a MySQL database:
 ```sql
 CREATE DATABASE appdb;
 ```
+## Configure database details in application.properties:
 
 spring.datasource.url=jdbc:mysql://localhost:3306/appdb
 spring.datasource.username=YOUR_USERNAME
